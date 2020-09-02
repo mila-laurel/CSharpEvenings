@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace DataStructures.LinkedList
 {
-    class LinkedList<T>
+    class LinkedList<T> : IEnumerable
     {
         public ListNode<T> Head { get; private set; }
 
@@ -25,6 +27,11 @@ namespace DataStructures.LinkedList
                 tailNode = tailNode.Next;
             }
             tailNode.Next = node;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return (IEnumerator)GetEnumerator();
         }
     }
 }

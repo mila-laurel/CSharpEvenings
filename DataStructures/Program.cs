@@ -19,13 +19,18 @@ namespace DataStructures
 
         static void Print<T>(LinkedList<T> list)
         {
-            var current = list.Head;
-            if(current != null)
-                System.Console.WriteLine(current.Data);
-            while(current.Next != null)
+            //var current = list.Head;
+            //if(current != null)
+            //    System.Console.WriteLine(current.Data);
+            //while(current.Next != null)
+            //{
+            //    current = current.Next;
+            //    System.Console.WriteLine(current.Data);
+            //}
+
+            foreach (ListNode<int> node in list)
             {
-                current = current.Next;
-                System.Console.WriteLine(current.Data);
+                Console.WriteLine(node.Data);
             }
         }
     }
