@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DataStructures.LinkedList;
 
 namespace DataStructures
@@ -7,30 +8,26 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var list = new LinkedList<int>();
+            var list = new DataStructures.LinkedList.LinkedList<int>();
             list.Add(1);
             list.Add(3);
             list.Add(5);
 
-            list.AddTail(12);
+            list.AddTail(12); 
+
+            var head = list.Head;
+            var nextItem = head.Next;
+            var oldNext = nextItem.Next;
+            nextItem.Next = new ListNode<int>(555, oldNext);
 
             Print(list);
         }
 
-        static void Print<T>(LinkedList<T> list)
+        static void Print<T>(IEnumerable<T> collection)
         {
-            //var current = list.Head;
-            //if(current != null)
-            //    System.Console.WriteLine(current.Data);
-            //while(current.Next != null)
-            //{
-            //    current = current.Next;
-            //    System.Console.WriteLine(current.Data);
-            //}
-
-            foreach (ListNode<int> node in list)
+            foreach (T node in collection)
             {
-                Console.WriteLine(node.Data);
+                Console.WriteLine(node);
             }
         }
     }

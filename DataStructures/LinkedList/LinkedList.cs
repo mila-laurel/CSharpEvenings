@@ -29,16 +29,15 @@ namespace DataStructures.LinkedList
             }
             tailNode.Next = node;
         }
-
-        
-        public IEnumerator GetEnumerator()
+                
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return (IEnumerator)GetEnumerator();
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return new LinkedListEnumerator<T>(this);
         }
     }
 }
