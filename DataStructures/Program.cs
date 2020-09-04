@@ -20,6 +20,12 @@ namespace DataStructures
             var oldNext = nextItem.Next;
             nextItem.Next = new ListNode<int>(555, oldNext);
 
+            //list.Remove(555);
+
+            Print(list);
+
+            Console.WriteLine(list[1]);
+            list[4] = 44;
             Print(list);
         }
 
