@@ -6,7 +6,6 @@ namespace DataStructures.LinkedList
 {
     class LinkedList<T> : IEnumerable<T>
     {
-        private ListNode<T>[] arr = new ListNode<T>[10];
         public ListNode<T> Head { get; private set; }
 
         public T this[int i]
@@ -48,7 +47,9 @@ namespace DataStructures.LinkedList
         public void Remove(T element)
         {
             ListNode<T> current = Head;
-            while (!current.Next.Data.Equals(element))
+            if (current == null)
+                throw new IndexOutOfRangeException();
+            while (!current.Data.Equals(element))
             {
                 if (current.Next != null)
                     current = current.Next;
