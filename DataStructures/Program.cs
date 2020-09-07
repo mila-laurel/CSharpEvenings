@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using DataStructures.LinkedList;
 
+[assembly: InternalsVisibleTo("DataStructures.Tests")]
 namespace DataStructures
 {
     class Program
@@ -30,6 +32,7 @@ namespace DataStructures
             var list = new DataStructures.LinkedList.LinkedList<int>();
             list.Add(5);
             list.Remove(6);
+            Print(list);
         }
 
         static void Print<T>(IEnumerable<T> collection)
