@@ -46,18 +46,26 @@ namespace DataStructures.LinkedList
 
         public void Remove(T element)
         {
-            ListNode<T> current = Head;
-            if (current == null)
-                throw new IndexOutOfRangeException();
-            while (!current.Data.Equals(element))
+            if (Head != null)
             {
-                if (current.Next != null)
-                    current = current.Next;
+                ListNode<T> current = Head;
+                if (current.Data.Equals(element))
+                    Head = current.Next;
                 else
-                    return;
+                {
+                    while (!current.Next.Data.Equals(element))
+                    {
+                        if (current.Next != null)
+                            current = current.Next;
+                        else
+                            return;
+                    }
+                    ListNode<T> removable = current.Next;
+                    current.Next = removable.Next;
+                }
             }
-            ListNode<T> removable = current.Next;
-            current.Next = removable.Next;
+            else
+                throw new NullReferenceException("The linked list is empty");
         }
 
         IEnumerator IEnumerable.GetEnumerator()
