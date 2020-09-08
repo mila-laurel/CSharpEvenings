@@ -8,6 +8,10 @@ namespace DataStructures.LinkedList
     {
         public ListNode<T> Head { get; private set; }
 
+        public LinkedList(ListNode<T> head = null)
+            {
+            Head = head;
+            }
         public T this[int i]
         {
             get

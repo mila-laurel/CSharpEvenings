@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DataStructures.LinkedList;
 using FluentAssertions;
+using FluentAssertions.Extensions;
 using NUnit.Framework;
 
 namespace DataStructures.Tests.LinkedList
@@ -22,7 +24,8 @@ namespace DataStructures.Tests.LinkedList
         [SetUp]
         public void Setup()
         {
-            _linkedList = new DataStructures.LinkedList.LinkedList<int>();
+            _linkedList = new DataStructures.LinkedList.LinkedList<int>(new ListNode<int>(568));
+            _linkedList.Head.Next = new ListNode<int>(666, new ListNode<int>(0));
         }
 
         [Test]
@@ -36,7 +39,47 @@ namespace DataStructures.Tests.LinkedList
             _linkedList.Add(3);
             //assert
             var result = _linkedList.ToArray();
-            result.Should().BeEquivalentTo(new [] {3, 2, 1});
+            result.Should().BeEquivalentTo(new[] { 3, 2, 1, 568, 666, 0 });
+        }
+
+        [Test]
+        public void TestAddTail_ShouldAddElementsAtTheEnd()
+        {
+            _linkedList.AddTail(1);
+            _linkedList.AddTail(2);
+            _linkedList.AddTail(3);
+            var result = _linkedList.ToArray();
+            result.Should().BeEquivalentTo(new[] { 568, 666, 0, 1, 2, 3 });
+        }
+
+        [Test]
+        public void TestRemove_ShouldRemoveElement()
+        {
+            _linkedList.Remove(666);
+            var result = _linkedList.ToArray();
+            result.Should().BeEquivalentTo(new[] { 568, 0 });
+        }
+
+        [Test]
+        public void GetEnumerator_ShouldReturnLinkedListEnumerator()
+        {
+            var result = _linkedList.GetEnumerator();
+            result.Should().BeEquivalentTo(new LinkedListEnumerator<int>(_linkedList));
+        }
+
+        [Test]
+        public void GetByIndex_ShouldReturnNode()
+        {
+            var result = _linkedList[1];
+            result.Should().Be(666);
+        }
+
+        [Test]
+        public void SetByIndex_ShouldSetValueForNode()
+        {
+            _linkedList[0] = 14;
+            var result = _linkedList.ToArray();
+            result.Should().BeEquivalentTo(new int[] { 14, 666, 0 });
         }
     }
 }
