@@ -50,16 +50,9 @@ namespace DataStructures.LinkedList
 
         public void Remove(T element)
         {
-            if (Head == null)
-                return;
-
-            if (Head.Data.Equals(element))
-            {
-                Head = Head.Next;
-                return;
-            }
-                
-            RemoveValue(Head, Head.Next, element);
+            ListNode<T> rootNode = new ListNode<T>(element, Head);
+            RemoveValue(rootNode, rootNode.Next, element);
+            rootNode = Head;
         }
 
         private void RemoveValue(ListNode<T> parentNode, ListNode<T> currentNode, T element)
