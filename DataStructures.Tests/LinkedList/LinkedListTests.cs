@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,8 +25,10 @@ namespace DataStructures.Tests.LinkedList
         [SetUp]
         public void Setup()
         {
-            _linkedList = new DataStructures.LinkedList.LinkedList<int>(new ListNode<int>(568));
-            _linkedList.Head.Next = new ListNode<int>(666, new ListNode<int>(0));
+            _linkedList = new DataStructures.LinkedList.LinkedList<int>(568);
+            ListNode<int> nextNode = _linkedList.Head;
+            nextNode = nextNode.Next = new ListNode<int>(666);
+            nextNode = nextNode.Next = new ListNode<int>(0);
         }
 
         [Test]
@@ -45,26 +48,42 @@ namespace DataStructures.Tests.LinkedList
         [Test]
         public void TestAddTail_ShouldAddElementsAtTheEnd()
         {
+            //act
             _linkedList.AddTail(1);
             _linkedList.AddTail(2);
             _linkedList.AddTail(3);
+            //assert
             var result = _linkedList.ToArray();
             result.Should().BeEquivalentTo(new[] { 568, 666, 0, 1, 2, 3 });
         }
 
-        [Test]
-        public void TestRemove_ShouldRemoveElement()
+        [TestCase(666,new int[] { 568, 0 })]
+        [TestCase(-3, new int[] { 568, 666, 0 })]
+        public void TestRemove_ShouldRemoveElementIfExists(int element, int[] expectedResult)
         {
-            _linkedList.Remove(666);
+            _linkedList.Remove(element);
+
             var result = _linkedList.ToArray();
-            result.Should().BeEquivalentTo(new[] { 568, 0 });
+            result.Should().BeEquivalentTo(expectedResult);
         }
 
         [Test]
         public void GetEnumerator_ShouldReturnLinkedListEnumerator()
         {
-            var result = _linkedList.GetEnumerator();
-            result.Should().BeEquivalentTo(new LinkedListEnumerator<int>(_linkedList));
+            var result = _linkedList.ToArray();
+            result.Should().BeEquivalentTo(new int[] { 568, 666, 0 });
+        }
+
+        [Test]
+        public void GetEnumerator_()
+        {
+            var enumerable = _linkedList as IEnumerable;
+            var result = new List<object>();
+            foreach (var item in enumerable)
+            {
+                result.Add(item);
+            }
+            result.ToArray().Should().BeEquivalentTo(new int[] { 568, 666, 0 });
         }
 
         [Test]
@@ -72,6 +91,13 @@ namespace DataStructures.Tests.LinkedList
         {
             var result = _linkedList[1];
             result.Should().Be(666);
+        }
+
+        [TestCase(-1)]
+        [TestCase(5)]
+        public void Get(int index)
+        {
+            Assert.That(() =>_linkedList[index], Throws.Exception.TypeOf<IndexOutOfRangeException>());
         }
 
         [Test]

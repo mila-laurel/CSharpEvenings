@@ -8,10 +8,13 @@ namespace DataStructures.LinkedList
     {
         public ListNode<T> Head { get; private set; }
 
-        public LinkedList(ListNode<T> head = null)
-            {
-            Head = head;
-            }
+        public LinkedList() { }
+
+        public LinkedList(T data)
+        {
+            Head = new ListNode<T>(data);
+        }
+
         public T this[int i]
         {
             get
@@ -57,10 +60,10 @@ namespace DataStructures.LinkedList
 
         private void RemoveValue(ListNode<T> parentNode, ListNode<T> currentNode, T element)
         {
-            if(currentNode == null)
+            if (currentNode == null)
                 return;
 
-            if(currentNode.Data.Equals(element))
+            if (currentNode.Data.Equals(element))
             {
                 parentNode.Next = currentNode.Next;
                 return;
