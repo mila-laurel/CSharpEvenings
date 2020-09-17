@@ -4,8 +4,9 @@ using System.Security.Principal;
 
 namespace DataStructures.BinaryTree
 {
-    class TreeNode<T> :IComparable<T>
+    class TreeNode<T>: IComparable<TreeNode<T>>
     {
+        
         public T Data { get; set; }
         public TreeNode<T> LeftChild { get; set; }
         public TreeNode<T> RightChild { get; set; }
@@ -17,7 +18,7 @@ namespace DataStructures.BinaryTree
             RightChild = right;
         }
 
-        public int CompareTo([AllowNull] T other)
+        public int CompareTo([AllowNull] TreeNode<T> other)
         {
             throw new NotImplementedException();
         }

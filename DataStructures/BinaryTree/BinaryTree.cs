@@ -5,63 +5,81 @@ using System.Text;
 
 namespace DataStructures.BinaryTree
 {
-    class BinaryTree<T> : IComparable<T>
+    class BinaryTree
     {
-        public TreeNode<T> Root { get; private set; }
-        public delegate Func<T, T, bool> compare();
+        public TreeNode<int> Root { get; private set; }
 
-        public BinaryTree(T data)
+        public BinaryTree(int data)
         {
-            Root = new TreeNode<T>(data);
-            
+            Root = new TreeNode<int>(data);
         }
 
-        public void Add(T element)
+        public void Add(int element)
         {
             if (Root == null)
             {
                 Root.Data = element;
                 return;
             }
-            TreeNode<T> currentNode = Root;
-            Traverse(element, currentNode);
+            TreeNode<int> currentNode = Root;
+            currentNode = Traverse(element, currentNode);
+            currentNode.Data = element;
         }
 
-        public void Traverse(T element, TreeNode<T> node)
+        public TreeNode<int> Traverse(int element, TreeNode<int> node)
         {
-            if (element.Equals(node.Data))
-                node = node.RightChild;
+            if (element > node.Data)
+            {
+                if (node.RightChild != null || node.RightChild.Data != element)
+                    node = node.RightChild;
+                else if (node.RightChild.Data == element)
+                    return node;
+                else
+                    return node.RightChild;
+            }
+            else if (element < node.Data)
+            {
+                if (node.LeftChild != null || node.LeftChild.Data != element)
+                    node = node.LeftChild;
+                else if (node.LeftChild.Data == element)
+                    return node;
+                else
+                    return node.LeftChild;
+            }
             else
-                node = node.LeftChild;
-            Traverse(element, node);
+                return node;
+            return Traverse(element, node);
         }
 
-        public void Remove(T element)
+        public void Remove(int element)
         {
-            TreeNode<T> rootNode = new TreeNode<T>(element, Root);
-            RemoveValue(rootNode, rootNode.RightChild, element);
-            rootNode = Root;
+            if (Root.Data == element)
+                throw new ArgumentException("You are trying to remove root");
+            RemoveValue(Root, element);
         }
 
-        private void RemoveValue(TreeNode<T> parentNode, TreeNode<T> currentNode, T element)
+        private void RemoveValue(TreeNode<int> currentNode, int element)
         {
+            TreeNode<int> removable;
             if (currentNode == null)
                 return;
-
-            if (currentNode.Data.Equals(element))
+            currentNode = Traverse(element, currentNode);
+            if (currentNode == null)
+                return;
+            if (currentNode.RightChild.Data == element)
             {
-                parentNode.RightChild = currentNode.RightChild;
+                removable = currentNode.RightChild;
+                currentNode.RightChild = removable.RightChild;
+                currentNode.LeftChild = removable.LeftChild;
                 return;
             }
-
-            RemoveValue(currentNode, currentNode.RightChild, element);
-        }
-
-        public int CompareTo([AllowNull] T other)
-        {
-            if (other == null)
-                return 0;
-            return 1;
+            if (currentNode.LeftChild.Data == element)
+            {
+                removable = currentNode.LeftChild;
+                currentNode.RightChild = removable.RightChild;
+                currentNode.LeftChild = removable.LeftChild;
+                return;
+            }
         }
     }
 }
