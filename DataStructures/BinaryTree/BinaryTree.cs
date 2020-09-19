@@ -5,81 +5,84 @@ using System.Text;
 
 namespace DataStructures.BinaryTree
 {
-    class BinaryTree
+    class BinaryTree<T> where T : IComparable<T>
     {
-        public TreeNode<int> Root { get; private set; }
+        public TreeNode<T> Root { get; private set; }
 
-        public BinaryTree(int data)
+        public BinaryTree(T data)
         {
-            Root = new TreeNode<int>(data);
+            Root = new TreeNode<T>(data);
         }
 
-        public void Add(int element)
+        public void Add(T element)
         {
             if (Root == null)
             {
                 Root.Data = element;
                 return;
             }
-            TreeNode<int> currentNode = Root;
+            TreeNode<T> currentNode = Root;
             currentNode = Traverse(element, currentNode);
             currentNode.Data = element;
         }
 
-        public TreeNode<int> Traverse(int element, TreeNode<int> node)
+        public TreeNode<T> Traverse(T element, TreeNode<T> node)
         {
-            if (element > node.Data)
+            if (element.CompareTo(node.Data) > 0)
             {
-                if (node.RightChild != null || node.RightChild.Data != element)
+                if (node.RightChild != null || node.RightChild.Data.CompareTo(element) != 0)
                     node = node.RightChild;
-                else if (node.RightChild.Data == element)
+                else if (node.RightChild.Data.CompareTo(element) == 0)
                     return node;
                 else
                     return node.RightChild;
             }
-            else if (element < node.Data)
+            else if (element.CompareTo(node.Data) < 0)
             {
-                if (node.LeftChild != null || node.LeftChild.Data != element)
-                    node = node.LeftChild;
-                else if (node.LeftChild.Data == element)
-                    return node;
+                if (node.LeftChild != null)
+                {
+                    if (node.LeftChild.Data.CompareTo(element) != 0)
+                        node = node.LeftChild;
+                    else
+                        return node;
+                }
                 else
                     return node.LeftChild;
+                }
+                else
+                    return node;
+                return Traverse(element, node);
             }
-            else
-                return node;
-            return Traverse(element, node);
-        }
 
-        public void Remove(int element)
-        {
-            if (Root.Data == element)
-                throw new ArgumentException("You are trying to remove root");
-            RemoveValue(Root, element);
-        }
-
-        private void RemoveValue(TreeNode<int> currentNode, int element)
-        {
-            TreeNode<int> removable;
-            if (currentNode == null)
-                return;
-            currentNode = Traverse(element, currentNode);
-            if (currentNode == null)
-                return;
-            if (currentNode.RightChild.Data == element)
+            public void Remove(T element)
             {
-                removable = currentNode.RightChild;
-                currentNode.RightChild = removable.RightChild;
-                currentNode.LeftChild = removable.LeftChild;
-                return;
+                if (Root.Data.CompareTo(element) == 0)
+                    throw new ArgumentException("You are trying to remove root");
+                RemoveValue(Root, element);
             }
-            if (currentNode.LeftChild.Data == element)
+
+            private void RemoveValue(TreeNode<T> currentNode, T element)
             {
-                removable = currentNode.LeftChild;
-                currentNode.RightChild = removable.RightChild;
-                currentNode.LeftChild = removable.LeftChild;
-                return;
+                TreeNode<T> removable;
+                if (currentNode == null)
+                    return;
+                currentNode = Traverse(element, currentNode);
+                if (currentNode == null)
+                    return;
+                if (currentNode.RightChild.Data.CompareTo(element) == 0)
+                {
+                    removable = currentNode.RightChild;
+                    currentNode.RightChild = removable.RightChild;
+                    currentNode.LeftChild = removable.LeftChild;
+                    return;
+                }
+                if (currentNode.LeftChild.Data.CompareTo(element) == 0)
+                {
+                    removable = currentNode.LeftChild;
+                    currentNode.RightChild = removable.RightChild;
+                    currentNode.LeftChild = removable.LeftChild;
+                    return;
+                }
             }
         }
     }
-}

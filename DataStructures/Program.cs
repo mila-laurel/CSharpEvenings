@@ -10,10 +10,12 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            //var list = new DataStructures.LinkedList.LinkedList<int>();
-            //list.Add(1);
-            //list.Add(3);
-            //list.Add(5);
+            var tree = new DataStructures.BinaryTree.BinaryTree<int>(15);
+            tree.Add(1);
+            tree.Add(3);
+            tree.Add(20);
+
+
 
             //list.AddTail(12); 
 
