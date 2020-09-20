@@ -14,7 +14,15 @@ namespace DataStructures
             tree.Add(1);
             tree.Add(3);
             tree.Add(20);
+            tree.Add(14);
+            tree.Add(28);
+            tree.Add(2);
+            tree.Add(25);
+            tree.Add(16);
 
+            tree.Remove(14);
+            tree.Remove(3);
+            tree.Remove(666);
 
 
             //list.AddTail(12); 
@@ -31,10 +39,10 @@ namespace DataStructures
             //Print(list);
             //list.Remove(5);
             //Print(list);
-            var list = new DataStructures.LinkedList.LinkedList<int>();
-            list.Add(5);
-            list.Remove(6);
-            Print(list);
+            //var list = new DataStructures.LinkedList.LinkedList<int>();
+            //list.Add(5);
+            //list.Remove(6);
+            //Print(list);
         }
 
         static void Print<T>(IEnumerable<T> collection)
