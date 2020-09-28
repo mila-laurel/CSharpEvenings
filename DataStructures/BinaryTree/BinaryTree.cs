@@ -33,33 +33,18 @@ namespace DataStructures.BinaryTree
 
         public TreeNode<T> Traverse(T element, TreeNode<T> node)
         {
+            TreeNode<T> selectedNode;
             if (element.CompareTo(node.Data) > 0)
-            {
-                if (node.RightChild != null)
-                {
-                    if (node.RightChild.Data.CompareTo(element) != 0)
-                        node = node.RightChild;
-                    else
-                        return node;
-                }
-                else
-                    return node;
-            }
+                selectedNode = node.RightChild;
             else if (element.CompareTo(node.Data) < 0)
-            {
-                if (node.LeftChild != null)
-                {
-                    if (node.LeftChild.Data.CompareTo(element) != 0)
-                        node = node.LeftChild;
-                    else
-                        return node;
-                }
-                else
-                    return node;
-            }
+                selectedNode = node.LeftChild;
             else
                 return node;
-            return Traverse(element, node);
+
+            if (selectedNode != null)
+                return Traverse(element, selectedNode);
+            else
+                return node;
         }
 
         public void Remove(T element)

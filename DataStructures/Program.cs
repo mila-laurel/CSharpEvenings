@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using DataStructures.BinaryTree;
 using DataStructures.LinkedList;
 
 [assembly: InternalsVisibleTo("DataStructures.Tests")]
@@ -20,10 +21,7 @@ namespace DataStructures
             tree.Add(25);
             tree.Add(16);
 
-            tree.Remove(14);
-            tree.Remove(3);
-            tree.Remove(666);
-
+            BFS(tree.Root);
 
             //list.AddTail(12); 
 
@@ -50,6 +48,22 @@ namespace DataStructures
             foreach (T node in collection)
             {
                 Console.WriteLine(node);
+            }
+        }
+
+        static void BFS(TreeNode<int> node)
+        {
+            Queue<TreeNode<int>> queue = new Queue<TreeNode<int>>();
+            queue.Enqueue(node);
+
+            while (queue.Count > 0)
+            {
+                TreeNode<int> currentNode = queue.Dequeue();
+                if (currentNode.LeftChild != null)
+                    queue.Enqueue(currentNode.LeftChild);
+                if (currentNode.RightChild != null)
+                    queue.Enqueue(currentNode.RightChild);
+                Console.WriteLine(currentNode.Data);
             }
         }
     }
