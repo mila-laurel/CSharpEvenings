@@ -11,7 +11,7 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            LinkedListMain();
+            //LinkedListMain();
             BinaryTreeMain();
         }
 
@@ -54,6 +54,7 @@ namespace DataStructures
             tree.Add(16);
 
             BFS(tree.Root);
+            DFS(tree.Root);
         }
 
         static void Print<T>(IEnumerable<T> collection)
@@ -88,10 +89,10 @@ namespace DataStructures
             while (stack.Count > 0)
             {
                 TreeNode<int> currentNode = stack.Pop();
-                if (currentNode.LeftChild != null)
-                    stack.Push(currentNode.LeftChild);
                 if (currentNode.RightChild != null)
                     stack.Push(currentNode.RightChild);
+                if (currentNode.LeftChild != null)
+                    stack.Push(currentNode.LeftChild);
                 Console.WriteLine(currentNode.Data);
             }
         }
