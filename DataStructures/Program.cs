@@ -52,6 +52,8 @@ namespace DataStructures
             tree.Add(2);
             tree.Add(25);
             tree.Add(16);
+            tree.Remove(3);
+            tree.Remove(666);
 
             BFS(tree.Root);
             DFS(tree.Root);

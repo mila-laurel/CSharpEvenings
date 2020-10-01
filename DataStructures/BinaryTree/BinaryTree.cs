@@ -50,7 +50,12 @@ namespace DataStructures.BinaryTree
         public void Remove(T element)
         {
             if (Root != null)
+            {
+                if (Root.Data.CompareTo(element) == 0)
+                    Root = Assign(Root);
+                else
                 RemoveValue(Root, element);
+            }
             else
                 return;
         }
@@ -59,26 +64,53 @@ namespace DataStructures.BinaryTree
         {
             TreeNode<T> removable;
 
-            currentNode = Traverse(element, currentNode);
+            currentNode = TraverseToRemove(element, currentNode);
             if (currentNode == null)
                 return;
             if (currentNode.RightChild != null && currentNode.RightChild.Data.CompareTo(element) == 0)
             {
                 removable = currentNode.RightChild;
-                currentNode.RightChild = Assign(removable, currentNode);
+                currentNode.RightChild = Assign(removable);
             }
             else if (currentNode.LeftChild != null && currentNode.LeftChild.Data.CompareTo(element) == 0)
             {
                 removable = currentNode.LeftChild;
-                currentNode.LeftChild = Assign(removable, currentNode);
+                currentNode.LeftChild = Assign(removable);
             }
             else
                 return;
         }
 
-        private TreeNode<T> Assign(TreeNode<T> removable, TreeNode<T> currentNode)
+        public TreeNode<T> TraverseToRemove(T element, TreeNode<T> node)
+        {
+            TreeNode<T> selectedNode;
+            if (node.RightChild != null)
+            {
+                if (element.CompareTo(node.Data) > 0 && element.CompareTo(node.RightChild.Data) != 0)
+                    selectedNode = node.RightChild;
+                else
+                    selectedNode = node;
+            }
+            else if (node.LeftChild != null)
+            {
+                if (element.CompareTo(node.Data) < 0 && element.CompareTo(node.LeftChild.Data) != 0)
+                    selectedNode = node.LeftChild;
+                else
+                    selectedNode = node;
+            }
+            else
+                return node;
+
+            if (selectedNode != null)
+                return TraverseToRemove(element, selectedNode);
+            else
+                return node;
+        }
+
+        private TreeNode<T> Assign(TreeNode<T> removable)
         {
             TreeNode<T> child = null;
+            TreeNode<T> currentNode;
             if (removable.LeftChild == null && removable.RightChild == null)
                 return null;
             if (removable.LeftChild != null)
@@ -87,7 +119,7 @@ namespace DataStructures.BinaryTree
             {
                 if (child != null)
                 {
-                    currentNode = Traverse(removable.RightChild.Data, currentNode);
+                    currentNode = Traverse(removable.RightChild.Data, child);
                     if (currentNode.Data.CompareTo(removable.RightChild.Data) > 0)
                         currentNode.LeftChild = removable.RightChild;
                     else if (currentNode.Data.CompareTo(removable.RightChild.Data) < 0)
