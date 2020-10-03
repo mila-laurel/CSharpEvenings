@@ -54,7 +54,7 @@ namespace DataStructures.BinaryTree
                 if (Root.Data.CompareTo(element) == 0)
                     Root = Assign(Root);
                 else
-                RemoveValue(Root, element);
+                    RemoveValue(Root, element);
             }
             else
                 return;
@@ -84,27 +84,19 @@ namespace DataStructures.BinaryTree
         public TreeNode<T> TraverseToRemove(T element, TreeNode<T> node)
         {
             TreeNode<T> selectedNode;
-            if (node.RightChild != null)
-            {
-                if (element.CompareTo(node.Data) > 0 && element.CompareTo(node.RightChild.Data) != 0)
+            if (element.CompareTo(node.Data) > 0)
+                if (node.RightChild != null && element.CompareTo(node.RightChild.Data) != 0)
                     selectedNode = node.RightChild;
                 else
-                    selectedNode = node;
-            }
-            else if (node.LeftChild != null)
-            {
-                if (element.CompareTo(node.Data) < 0 && element.CompareTo(node.LeftChild.Data) != 0)
+                    return node;
+            else if (element.CompareTo(node.Data) < 0)
+                if (node.LeftChild != null && element.CompareTo(node.LeftChild.Data) != 0)
                     selectedNode = node.LeftChild;
                 else
-                    selectedNode = node;
-            }
+                    return node;
             else
                 return node;
-
-            if (selectedNode != null)
-                return TraverseToRemove(element, selectedNode);
-            else
-                return node;
+            return TraverseToRemove(element, selectedNode);
         }
 
         private TreeNode<T> Assign(TreeNode<T> removable)
@@ -129,6 +121,38 @@ namespace DataStructures.BinaryTree
                     child = removable.RightChild;
             }
             return child;
+        }
+
+        public static void BFS(TreeNode<T> node, Action<T> CallBack)
+        {
+            Queue<TreeNode<T>> queue = new Queue<TreeNode<T>>();
+            queue.Enqueue(node);
+
+            while (queue.Count > 0)
+            {
+                TreeNode<T> currentNode = queue.Dequeue();
+                if (currentNode.LeftChild != null)
+                    queue.Enqueue(currentNode.LeftChild);
+                if (currentNode.RightChild != null)
+                    queue.Enqueue(currentNode.RightChild);
+                CallBack(currentNode.Data);
+            }
+        }
+
+        public static void DFS(TreeNode<T> node, Action<T> CallBack)
+        {
+            Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+            stack.Push(node);
+
+            while (stack.Count > 0)
+            {
+                TreeNode<T> currentNode = stack.Pop();
+                if (currentNode.RightChild != null)
+                    stack.Push(currentNode.RightChild);
+                if (currentNode.LeftChild != null)
+                    stack.Push(currentNode.LeftChild);
+                CallBack(currentNode.Data);
+            }
         }
     }
 }
