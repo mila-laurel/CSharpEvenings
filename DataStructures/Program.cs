@@ -55,7 +55,7 @@ namespace DataStructures
             tree.Remove(3);
             tree.Remove(666);
 
-            BinaryTree<int>.BFS(tree.Root, Console.WriteLine(data));
+            BinaryTree<int>.BFS(tree.Root, Console.WriteLine);
             DFS(tree.Root);
         }
 
