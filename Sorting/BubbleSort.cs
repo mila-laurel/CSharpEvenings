@@ -16,13 +16,16 @@ namespace Sorting
 
         private static void Sort(int[] arr, Func<int, int, bool> compare)
         {
+            int lengthToSort = arr.Length;
             for (int i = 0; i < arr.Length - 1; i++)
             {
-                for (int j = 0; j < arr.Length - 1; j++)
+                for (int j = 0; j < lengthToSort - 1; j++)
                 {
                     if (compare(arr[j], arr[j + 1]))
                         Util.Swap(ref arr[j], ref arr[j + 1]);
                 }
+
+                lengthToSort--;
             }
         }
     }

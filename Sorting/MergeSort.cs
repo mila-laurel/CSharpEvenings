@@ -16,22 +16,18 @@ namespace Sorting
 
         private static void DoMergeSort(int[] arr, int low, int high, Func<int, int, bool> compare)
         {
-            for (int i = 0; i < high; i = i + 2)
+            if (low < high)
             {
-                if (arr[i] > arr[i + 1])
-                    Util.Swap(ref arr[i], ref arr[i + 1]);
-            }
-            for (int i = 1; i < high; i = i + 2)
-            {
-
+                int pivot = (low + high) / 2;
+                DoMergeSort(arr, low, pivot, compare);
+                DoMergeSort(arr, pivot + 1, high, compare);
+                Merge(arr, low, pivot, high, compare);
             }
         }
 
-        private static int Partition(int[] arr, int low, int high, Func<int, int, bool> compare)
+        private static void Merge(int[] arr, int low, int pivot, int high, Func<int, int, bool> compare)
         {
-            int middle = high / 2;
-            high = middle - 1;
-            return high;
+            throw new NotImplementedException();
         }
     }
 }

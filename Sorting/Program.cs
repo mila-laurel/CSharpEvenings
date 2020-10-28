@@ -12,7 +12,7 @@ namespace Sorting
             System.Console.WriteLine("Source array:");
             sourceArray.Print();
 
-            TestSort("Buble", sourceArray, BubbleSort.SortAscending, BubbleSort.SortDescending);
+            TestSort("Bubble", sourceArray, BubbleSort.SortAscending, BubbleSort.SortDescending);
             TestSort("Insertion", sourceArray, InsertSort.SortAscending, InsertSort.SortDescending);
             TestSort("Selection", sourceArray, SelectionSort.SortAscending, SelectionSort.SortDescending);
             TestSort("Quick", sourceArray, QuickSort.SortAscending, QuickSort.SortDescending);
